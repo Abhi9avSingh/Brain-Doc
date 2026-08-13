@@ -19,7 +19,7 @@ import { mockDocuments } from '@/lib/mockData';
 
 const pageMeta: Record<Page, { title: string; subtitle?: string }> = {
   landing: { title: '', subtitle: '' },
-  login: { title: 'Sign In', subtitle: 'Welcome back to BrainDoc' },
+  login: { title: 'Sign In', subtitle: 'Welcome  to BrainDoc' },
   register: { title: 'Create Account', subtitle: 'Start building your second brain' },
   dashboard: { title: 'Dashboard', subtitle: 'Your knowledge base at a glance' },
   documents: { title: 'Documents', subtitle: 'Upload and manage your files' },
