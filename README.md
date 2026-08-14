@@ -1,87 +1,89 @@
-# Brain-Doc
-# 🧠 BrainDoc – Personal Knowledge Agent
+# BrainDoc 3D Experience
 
-> 🚧 **BrainDoc is currently under active development.** New features are being added continuously as we work towards building an intelligent AI-powered personal knowledge management platform.
+A cinematic, responsive personal-knowledge product experience inspired by the editorial motion and spatial storytelling of Shopify Editions—implemented specifically for BrainDoc without copying Shopify assets or layouts.
 
-## 📖 Overview
+## What changed
 
-BrainDoc is an AI-powered **Personal Knowledge Agent** designed to act as a digital second brain. It enables users to organize, search, and retrieve information from documents, notes, and other personal data sources using **Retrieval-Augmented Generation (RAG)**, **Large Language Models (LLMs)**, and **semantic vector search**.
+- Interactive canvas-based 3D knowledge sphere with pointer parallax
+- Scroll-led editorial landing page with varied visual chapters
+- Pointer-reactive 3D cards, layered document stacks, orbital integrations, and animated privacy vault
+- Clickable four-stage RAG workflow
+- Interactive grounded-answer demo with source citations
+- Responsive mobile navigation and mobile-specific 3D layouts
+- Reduced-motion support and keyboard focus states
+- Persistent hash-based navigation (`#dashboard`, `#documents`, `#chat`, etc.)
+- Working file picker and drag/drop upload simulation with progress and indexing states
+- Persistent document state via `localStorage`
+- Working document search/filter/preview/delete/re-index flows
+- Working AI chat simulation, semantic search, integrations, settings, theme, and notifications
+- Spatial dashboard knowledge-core visualization
 
-Our goal is to build an AI assistant that understands your knowledge, remembers important information, and provides accurate, context-aware answers whenever you need them.
+## Stack
 
----
+- React 18
+- TypeScript
+- Vite
+- Tailwind CSS
+- Canvas 2D for the dependency-free 3D knowledge graph
+- CSS 3D transforms for depth, tilt, cards, orbits, and layered scenes
 
-## ✨ Features
+No Three.js dependency is required. This keeps the experience lightweight and straightforward to maintain.
 
-* 📄 Upload and manage documents (PDF, DOCX, TXT)
-* 🔍 Semantic document search using vector embeddings
-* 🤖 AI-powered Question & Answer system
-* 📚 Intelligent document summarization
-* 🧠 Personalized long-term knowledge base
-* 🔐 Secure authentication and user management
+## Run locally
 
----
+```bash
+npm install
+npm run dev
+```
 
-## ⚙️ How It Works
+Production validation:
 
-1. Upload your documents.
-2. The system extracts and chunks the content.
-3. Embeddings are generated and stored in a vector database.
-4. Relevant information is retrieved based on the user's query.
-5. The LLM generates an accurate, context-aware response using RAG.
+```bash
+npm run typecheck
+npm run lint
+npm run build
+npm run preview
+```
 
----
+## Frontend/backend boundary
 
-## 🚀 Currently Working On
+This project ships a complete interactive frontend prototype. The current document ingestion, AI response, authentication, integration, and search behaviors use realistic local demo state. Replace the simulated handlers with your API calls at these boundaries:
 
-* 🌐 Web search integration
-* 📧 Gmail & Google Drive integration
-* 📅 Calendar and meeting assistant
-* 🎙️ Voice-based AI interaction
-* 📱 Mobile-friendly experience
-* 🤝 Team workspaces and collaboration
-* ⚡ Faster indexing and retrieval
-* 🔒 Enhanced privacy and security
+- Authentication: `src/pages/AuthPage.tsx`
+- Upload/indexing: `src/components/UploadPanel.tsx` and `src/App.tsx`
+- RAG chat: `src/pages/ChatPage.tsx`
+- Semantic search: `src/pages/SearchPage.tsx`
+- OAuth connections: `src/pages/IntegrationsPage.tsx`
 
----
+Recommended backend endpoints:
 
-## 🛠️ Tech Stack
+```text
+POST   /api/auth/login
+POST   /api/auth/register
+POST   /api/documents/upload
+GET    /api/documents
+POST   /api/documents/:id/reindex
+DELETE /api/documents/:id
+POST   /api/search
+POST   /api/conversations/:id/messages   # stream via SSE
+GET    /api/integrations
+POST   /api/integrations/:provider/connect
+```
 
-* ⚛️ **React.js**
-* ⚡ **Vite**
-* 💨 **Tailwind CSS**
-* 🟢 **Node.js**
-* 🚀 **Express.js**
-* 🧠 **LLMs & RAG**
-* 🔎 **Vector Database**
-* 🗄️ **MongoDB / PostgreSQL**
+For production, use secure HTTP-only cookies, signed upload URLs, server-side file validation, per-user vector namespaces, source-level authorization, and streamed answer citations.
 
----
+## 3D implementation notes
 
-## 📂 Project Status
+`NeuralScene.tsx` generates a Fibonacci sphere, rotates points in 3D, perspective-projects them onto canvas, and draws depth-aware connections. It caps device pixel ratio and pauses expensive drawing when offscreen. `TiltCard.tsx` uses pointer position to update transform and highlight variables without adding another rendering dependency.
 
-🚧 **Work in Progress**
+## Spatial workspace
 
-BrainDoc is currently in active development. The core architecture has been designed, and we are continuously adding new AI capabilities, improving retrieval accuracy, and expanding integrations.
+The authenticated workspace now uses a GPU-friendly spatial control-deck system across Dashboard, Documents, AI Chat, Search, Integrations, and Settings. Pointer tilt is event-delegated and updated through `requestAnimationFrame`, so cards gain depth without React re-renders. The shell includes a keyboard command palette (`Cmd/Ctrl + K`), route-specific ambient color, responsive mobile navigation, reduced-motion fallbacks, and glass/depth materials that share the landing page's visual language.
 
----
+## Precision motion runtime
 
-## 🎯 Vision
+The final interaction pass centralizes scroll progress, scroll direction, velocity, pointer position, page visibility, and reduced-motion behavior in one requestAnimationFrame-driven runtime. Landing-page scroll no longer causes React tree re-renders. Route changes use the View Transitions API when available, with graceful fallbacks. Dialogs now lock scroll, trap focus, close with Escape, restore focus, and expose correct ARIA semantics. Navigation, notifications, command search, focus states, mobile safe areas, and keyboard operation have also been refined.
 
-Our vision is to build an AI-powered **second brain** that helps users organize, remember, and interact with their personal knowledge effortlessly, making information retrieval faster, smarter, and more intuitive.
+## Living Knowledge Core
 
----
-
-## 🤝 Contributing
-
-Contributions, ideas, and feedback are always welcome! Feel free to fork the repository, open an issue, or submit a pull request.
-
----
-
-## 📜 License
-
-This project is licensed under the **MIT License**.
-
----
-
-### ⭐ If you like this project, don't forget to star the repository!
+The landing experience now centers on one scroll-driven concept: scattered source fragments evolving into a cited intelligence core. A procedural WebGPU shader is selected when available, with WebGL2 and Canvas 2D fallbacks. The renderer initializes during idle time, renders only near the viewport, pauses when hidden, caps DPR, monitors frame cost, and reduces resolution under sustained load. Save-Data, low-memory, low-core, reduced-motion, and manual reduced-effects modes use lighter rendering paths. All story copy remains semantic DOM content above the decorative canvas.
