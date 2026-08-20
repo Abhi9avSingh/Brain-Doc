@@ -196,7 +196,7 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
 
             <Reveal className="edition-hero-stage" delay={140}>
               <div className="edition-stage-frame">
-                <div className="edition-stage-index">BD / KNOWLEDGE CORE</div>
+                <div className="edition-stage-index"> </div>
                 <NeuralScene />
                 <div className="edition-stage-footer">
                   <span>Move your cursor</span>
