@@ -610,15 +610,15 @@
 
 .edition-marquee {
   position: absolute;
-  z-index: 3;
+  z-index: 0;
   right: 0;
   bottom: 0;
   left: 0;
   overflow: hidden;
   border-top: 1px solid rgba(255, 255, 255, 0.09);
   border-bottom: 1px solid rgba(255, 255, 255, 0.09);
-  background: rgba(255, 255, 255, 0.025);
-  transform: rotate(-1deg) scale(1.02);
+  background: rgba(142, 98, 98, 0);
+  transform:   scale(1.02);
 }
 
 .edition-marquee > div {
@@ -630,7 +630,7 @@
   color: rgba(255,255,255,.64);
   font: 800 0.72rem/1 Arial, sans-serif;
   letter-spacing: 0.17em;
-  animation: editionMarquee 26s linear infinite;
+  animation: editionMarquee 10s linear infinite;
 }
 
 .edition-marquee i {
